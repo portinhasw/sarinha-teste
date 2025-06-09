@@ -13,7 +13,9 @@ class Database {
         try {
             $dsn = "pgsql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name;
             $this->conn = new PDO($dsn, $this->username, $this->password);
-            $this->conn->exec("set names utf8");
+            
+            // Para PostgreSQL, usamos SET client_encoding ao invés de set names utf8
+            $this->conn->exec("SET client_encoding TO 'UTF8'");
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $exception) {
             echo "Connection error: " . $exception->getMessage();
